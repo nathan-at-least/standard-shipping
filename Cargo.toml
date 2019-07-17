@@ -3,5 +3,6 @@ name = "standard-shipping"
 version = "0.1.0"
 authors = ["Nathan Wilcox <nathan+dev@z.cash>"]
 edition = "2018"
+description = "Standardized build, test, style checks integrated into git workflow for cargo packages."
 
 [dependencies]
