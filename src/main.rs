@@ -1,3 +1,5 @@
+mod verify;
+
 use clap::{App, Error, SubCommand};
 
 fn main() -> Result<(), Error> {
@@ -17,14 +19,13 @@ fn main() -> Result<(), Error> {
     let matches = app.clone().get_matches();
 
     if let Some(matches) = matches.subcommand_matches("verify") {
-        if let Some(_matches) = matches.subcommand_matches("verify") {
-            unimplemented!("verify all.");
+        if let Some(matches) = matches.subcommand_matches("all") {
+            verify::all(matches)
         } else {
-            unimplemented!("No verify subcommand.");
+            verify::all(matches)
         }
     } else {
         app.print_help()?;
+        Ok(())
     }
-
-    Ok(())
 }
