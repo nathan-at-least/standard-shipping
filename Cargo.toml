@@ -6,3 +6,4 @@ edition = "2018"
 description = "Standardized build, test, style checks integrated into git workflow for cargo packages."
 
 [dependencies]
+clap = "2.33.0"
