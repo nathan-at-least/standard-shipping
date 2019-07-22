@@ -1,6 +1,8 @@
+mod error;
 mod verify;
 
-use clap::{App, Error, SubCommand};
+use crate::error::Error;
+use clap::{App, SubCommand};
 
 fn main() -> Result<(), Error> {
     let mut app = App::new(env!("CARGO_PKG_NAME"))
@@ -10,10 +12,7 @@ fn main() -> Result<(), Error> {
         .subcommand(
             SubCommand::with_name("verify")
                 .about("Verify aspects of the workspace or package.")
-                .subcommand(
-                    SubCommand::with_name("all")
-                        .about("Run all verifications.")
-                )
+                .subcommand(SubCommand::with_name("all").about("Run all verifications.")),
         );
 
     let matches = app.clone().get_matches();
