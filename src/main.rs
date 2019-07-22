@@ -17,6 +17,11 @@ fn main() -> Result<(), Error> {
                 .subcommand(SubCommand::with_name("build").about("cargo build"))
                 .subcommand(SubCommand::with_name("doc").about("cargo doc"))
                 .subcommand(SubCommand::with_name("fmt").about("cargo fmt verification")),
+        )
+        .subcommand(
+            SubCommand::with_name("git-hooks")
+                .about("Manage git-hooks.")
+                .subcommand(SubCommand::with_name("install").about("Install git hooks.")),
         );
 
     let matches = app.clone().get_matches();
@@ -34,6 +39,13 @@ fn main() -> Result<(), Error> {
             verify::fmt(matches)
         } else {
             verify::all(matches)
+        }
+    } else if let Some(matches) = matches.subcommand_matches("git-hooks") {
+        if let Some(matches) = matches.subcommand_matches("install") {
+            unimplemented!("git-hooks install {:?}", matches);
+        } else {
+            app.print_help()?;
+            Ok(())
         }
     } else {
         app.print_help()?;
