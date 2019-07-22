@@ -12,7 +12,11 @@ fn main() -> Result<(), Error> {
         .subcommand(
             SubCommand::with_name("verify")
                 .about("Verify aspects of the workspace or package.")
-                .subcommand(SubCommand::with_name("all").about("Run all verifications.")),
+                .subcommand(SubCommand::with_name("all").about("Run all verifications."))
+                .subcommand(SubCommand::with_name("test").about("cargo test"))
+                .subcommand(SubCommand::with_name("build").about("cargo build"))
+                .subcommand(SubCommand::with_name("doc").about("cargo doc"))
+                .subcommand(SubCommand::with_name("fmt").about("cargo fmt verification")),
         );
 
     let matches = app.clone().get_matches();
@@ -20,6 +24,14 @@ fn main() -> Result<(), Error> {
     if let Some(matches) = matches.subcommand_matches("verify") {
         if let Some(matches) = matches.subcommand_matches("all") {
             verify::all(matches)
+        } else if let Some(matches) = matches.subcommand_matches("test") {
+            verify::test(matches)
+        } else if let Some(matches) = matches.subcommand_matches("build") {
+            verify::build(matches)
+        } else if let Some(matches) = matches.subcommand_matches("doc") {
+            verify::doc(matches)
+        } else if let Some(matches) = matches.subcommand_matches("fmt") {
+            verify::fmt(matches)
         } else {
             verify::all(matches)
         }
