@@ -1,7 +1,7 @@
-use clap::{App, SubCommand};
+use clap::{App, Error, SubCommand};
 
-fn main() {
-    let matches = App::new(env!("CARGO_PKG_NAME"))
+fn main() -> Result<(), Error> {
+    let mut app = App::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
         .author(env!("CARGO_PKG_AUTHORS"))
         .about(env!("CARGO_PKG_DESCRIPTION"))
@@ -12,8 +12,9 @@ fn main() {
                     SubCommand::with_name("all")
                         .about("Run all verifications.")
                 )
-        )
-        .get_matches();
+        );
+
+    let matches = app.clone().get_matches();
 
     if let Some(matches) = matches.subcommand_matches("verify") {
         if let Some(_matches) = matches.subcommand_matches("verify") {
@@ -22,6 +23,8 @@ fn main() {
             unimplemented!("No verify subcommand.");
         }
     } else {
-        unimplemented!("No top subcommand.");
+        app.print_help()?;
     }
+
+    Ok(())
 }
